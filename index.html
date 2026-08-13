@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Character Pac-Man</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #game-container {
+            text-align: center;
+        }
+
+        #ui {
+            display: flex;
+            justify-content: space-between;
+            width: 440px;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        canvas {
+            border: 4px solid #33f;
+            box-shadow: 0 0 20px rgba(51, 51, 255, 0.5);
+            background-color: #000;
+        }
+
+        #controls-info {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="ui">
+        <div>SCORE: <span id="score">0</span></div>
+        <div>LIVES: <span id="lives">3</span></div>
+    </div>
+    <canvas id="canvas" width="440" height="440"></canvas>
+    <div id="controls-info">Use <b>Arrow Keys</b> or <b>WASD</b> to Move</div>
+</div>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+const TILE_SIZE = 22;
+const ROWS = 20;
+const COLS = 20;
+
+// Image Paths
+const playerImg = new Image();
+playerImg.src = 'Screenshot_2026-08-07_194451-removebg-preview (1).png';
+
+const ghostImgs = [
+    new Image(),
+    new Image(),
+    new Image(),
+    new Image()
+];
+ghostImgs[0].src = '6qOpg.jpg';
+ghostImgs[1].src = 'Ah6NS.jpg';
+ghostImgs[2].src = 'vlQiS.jpg';
+ghostImgs[3].src = 'x337z.jpg';
+
+// 1 = Wall, 0 = Pellet, 2 = Empty
+const map = [
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1],
+    [1,0,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,0,1],
+    [1,0,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,1,1,1,0,1,1,1,2,2,1,1,1,0,1,1,1,0,1],
+    [1,0,0,0,0,0,1,2,2,2,2,2,2,1,0,0,0,0,0,1],
+    [1,1,1,1,1,0,1,2,1,1,1,1,2,1,0,1,1,1,1,1],
+    [2,2,2,2,1,0,2,2,1,2,2,1,2,2,0,1,2,2,2,2],
+    [1,1,1,1,1,0,1,2,1,2,2,1,2,1,0,1,1,1,1,1],
+    [1,0,0,0,0,0,1,2,1,1,1,1,2,1,0,0,0,0,0,1],
+    [1,0,1,1,1,0,1,2,2,2,2,2,2,1,0,1,1,1,0,1],
+    [1,0,0,0,1,0,1,1,1,2,2,1,1,1,0,1,0,0,0,1],
+    [1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1],
+    [1,0,0,0,0,0,1,1,1,0,0,1,1,1,0,0,0,0,0,1],
+    [1,0,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,0,1],
+    [1,0,1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,0,1],
+    [1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1],
+    [1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+];
+
+let score = 0;
+let lives = 3;
+
+class Player {
+    constructor() {
+        this.reset();
+    }
+
+    reset() {
+        this.x = 9 * TILE_SIZE;
+        this.y = 13 * TILE_SIZE;
+        this.dirX = 0;
+        this.dirY = 0;
+        this.nextDirX = 0;
+        this.nextDirY = 0;
+        this.speed = 2;
+    }
+
+    update() {
+        // Try changing direction if aligned with grid
+        if (this.x % TILE_SIZE === 0 && this.y % TILE_SIZE === 0) {
+            // Eat Pellets
+            let currentGridX = this.x / TILE_SIZE;
+            let currentGridY = this.y / TILE_SIZE;
+            if (map[currentGridY][currentGridX] === 0) {
+                map[currentGridY][currentGridX] = 2;
+                score += 10;
+                document.getElementById('score').innerText = score;
+            }
+
+            // Check next direction validity
+            if (!this.isWall(this.nextDirX, this.nextDirY)) {
+                this.dirX = this.nextDirX;
+                this.dirY = this.nextDirY;
+            }
+        }
+
+        // Move if path is clear
+        if (!this.isWall(this.dirX, this.dirY)) {
+            this.x += this.dirX * this.speed;
+            this.y += this.dirY * this.speed;
+        }
+
+        // Wrap around screen side tunnels
+        if (this.x < 0) this.x = (COLS - 1) * TILE_SIZE;
+        if (this.x >= COLS * TILE_SIZE) this.x = 0;
+    }
+
+    isWall(dx, dy) {
+        let nextX = this.x + dx * this.speed;
+        let nextY = this.y + dy * this.speed;
+
+        let corners = [
+            { x: nextX, y: nextY },
+            { x: nextX + TILE_SIZE - 1, y: nextY },
+            { x: nextX, y: nextY + TILE_SIZE - 1 },
+            { x: nextX + TILE_SIZE - 1, y: nextY + TILE_SIZE - 1 }
+        ];
+
+        return corners.some(corner => {
+            let tileX = Math.floor(corner.x / TILE_SIZE);
+            let tileY = Math.floor(corner.y / TILE_SIZE);
+            
+            // Allow wrapping off-screen horizontally
+            if (tileX < 0 || tileX >= COLS) return false;
+            
+            return map[tileY][tileX] === 1;
+        });
+    }
+
+    draw() {
+        ctx.drawImage(playerImg, this.x, this.y, TILE_SIZE, TILE_SIZE);
+    }
+}
+
+class Ghost {
+    constructor(img, startX, startY) {
+        this.img = img;
+        this.startX = startX;
+        this.startY = startY;
+        this.reset();
+    }
+
+    reset() {
+        this.x = this.startX * TILE_SIZE;
+        this.y = this.startY * TILE_SIZE;
+        this.dirX = 0;
+        this.dirY = -1;
+        this.speed = 1;
+    }
+
+    update() {
+        // Change direction at intersections
+        if (this.x % TILE_SIZE === 0 && this.y % TILE_SIZE === 0) {
+            let possibleDirs = [
+                {x: 0, y: -1},
+                {x: 0, y: 1},
+                {x: -1, y: 0},
+                {x: 1, y: 0}
+            ].filter(d => {
+                // Prevent reversing immediately unless dead end
+                if (d.x === -this.dirX && d.y === -this.dirY) return false;
+                return !this.isWall(d.x, d.y);
+            });
+
+            if (possibleDirs.length > 0) {
+                let randomDir = possibleDirs[Math.floor(Math.random() * possibleDirs.length)];
+                this.dirX = randomDir.x;
+                this.dirY = randomDir.y;
+            } else {
+                this.dirX = -this.dirX;
+                this.dirY = -this.dirY;
+            }
+        }
+
+        this.x += this.dirX * this.speed;
+        this.y += this.dirY * this.speed;
+    }
+
+    isWall(dx, dy) {
+        let nextX = this.x + dx * this.speed;
+        let nextY = this.y + dy * this.speed;
+
+        let corners = [
+            { x: nextX, y: nextY },
+            { x: nextX + TILE_SIZE - 1, y: nextY },
+            { x: nextX, y: nextY + TILE_SIZE - 1 },
+            { x: nextX + TILE_SIZE - 1, y: nextY + TILE_SIZE - 1 }
+        ];
+
+        return corners.some(corner => {
+            let tileX = Math.floor(corner.x / TILE_SIZE);
+            let tileY = Math.floor(corner.y / TILE_SIZE);
+            if (tileX < 0 || tileX >= COLS || tileY < 0 || tileY >= ROWS) return true;
+            return map[tileY][tileX] === 1;
+        });
+    }
+
+    draw() {
+        ctx.drawImage(this.img, this.x, this.y, TILE_SIZE, TILE_SIZE);
+    }
+}
+
+const player = new Player();
+const ghosts = [
+    new Ghost(ghostImgs[0], 9, 8),
+    new Ghost(ghostImgs[1], 10, 8),
+    new Ghost(ghostImgs[2], 9, 9),
+    new Ghost(ghostImgs[3], 10, 9)
+];
+
+// Key Listeners
+window.addEventListener('keydown', (e) => {
+    switch(e.key) {
+        case 'ArrowUp': case 'w': case 'W':
+            player.nextDirX = 0; player.nextDirY = -1; break;
+        case 'ArrowDown': case 's': case 'S':
+            player.nextDirX = 0; player.nextDirY = 1; break;
+        case 'ArrowLeft': case 'a': case 'A':
+            player.nextDirX = -1; player.nextDirY = 0; break;
+        case 'ArrowRight': case 'd': case 'D':
+            player.nextDirX = 1; player.nextDirY = 0; break;
+    }
+});
+
+function drawMap() {
+    for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+            if (map[r][c] === 1) {
+                ctx.fillStyle = '#1111bb';
+                ctx.fillRect(c * TILE_SIZE, r * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            } else if (map[r][c] === 0) {
+                ctx.fillStyle = '#ffb8ae';
+                ctx.beginPath();
+                ctx.arc(c * TILE_SIZE + TILE_SIZE / 2, r * TILE_SIZE + TILE_SIZE / 2, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
+}
+
+function checkCollisions() {
+    ghosts.forEach(ghost => {
+        let dist = Math.hypot((player.x + TILE_SIZE / 2) - (ghost.x + TILE_SIZE / 2), (player.y + TILE_SIZE / 2) - (ghost.y + TILE_SIZE / 2));
+        if (dist < TILE_SIZE / 1.5) {
+            lives--;
+            document.getElementById('lives').innerText = lives;
+            if (lives <= 0) {
+                alert("Game Over! Final Score: " + score);
+                document.location.reload();
+            } else {
+                player.reset();
+                ghosts.forEach(g => g.reset());
+            }
+        }
+    });
+}
+
+function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawMap();
+    player.update();
+    player.draw();
+
+    ghosts.forEach(ghost => {
+        ghost.update();
+        ghost.draw();
+    });
+
+    checkCollisions();
+
+    requestAnimationFrame(gameLoop);
+}
+
+// Start Game Loop after elements load
+gameLoop();
+</script>
+
+</body>
+</html>
