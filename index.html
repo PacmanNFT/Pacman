@@ -138,13 +138,28 @@
   // ============== EMBEDDED SPRITES ==============
   // Restored inline SVG placeholders so the game has visible sprites again.
   const SPRITES = {
-    pacman: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#ffcc00"/><path d="M32 32 L64 12 A30 30 0 0 1 32 62 z" fill="#000"/></svg>'),
-    ghost1: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#ff0000"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
-    ghost2: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#00ffff"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
-    ghost3: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#ff00ff"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
-    ghost4: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#ffaa00"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
-    ghost5: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#00ff00"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
-    ghost6: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#a000ff"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>')
+    pacman: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#ffcc00"/><path d="M32 32 L64 12 A30 [...]'),
+    ghost1: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#ff0000"/><circle c[...]'),
+    ghost2: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#00ffff"/><circle c[...]'),
+    ghost3: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#ff00ff"/><circle c[...]'),
+    ghost4: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#ffaa00"/><circle c[...]'),
+    ghost5: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#00ff00"/><circle c[...]'),
+    ghost6: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#a000ff"/><circle c[...]')
+  };
+
+  // ============== IMAGE DESCRIPTIONS ==============
+  // The following one-line descriptions correspond to the pixel-art images you provided (Image 1..9).
+  // They are stored here as a reference mapping and can be used later for accessibility or captions.
+  const IMAGE_DESCRIPTIONS = {
+    1: "Pixel-art skull character with a pink visor and white high collar on a black background.",
+    2: "Green-skinned pixel-art character with red spiky hair, glowing yellow eyes, and a red jacket.",
+    3: "Futuristic pixel-art head with a gray mask, red glowing eyes, and a magenta jacket.",
+    4: "Green pixel-art character with small red-orange horns, yellow eyes, and a dark suit and tie.",
+    5: "Pixel-art insectoid character with large red eyes, green face, and a red jacket on a black background.",
+    6: "Pixel-art character with a shaggy wolf-hood and glowing green eyes on a black background.",
+    7: "Pixel-art insectoid character with large red eyes, green face, and a red jacket on a black background.",
+    8: "Pixel-art character in a shaggy wolf hood with glowing green eyes on a black background.",
+    9: "Pixel-art skull wearing a teal helmet and a black visor with a red glowing slit, set above a maroon jacket with cyan accents on a black background."
   };
 
   // ============== MAP ==============
