@@ -136,14 +136,15 @@
 
   <script>
   // ============== EMBEDDED SPRITES ==============
+  // Restored inline SVG placeholders so the game has visible sprites again.
   const SPRITES = {
-    pacman: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAATaUlEQVR42tWbbaxlZ1XHf2s9zz7nvt87r512pqXTaUtLKdAWKENAjQENRqxoqn7xAwaDBBMF9QufSmJCJIZojN80QSPGKCaWRo0GIiC1QN/oe5nO[...]",
-    ghost1: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAPY0lEQVR42u2be6xnV1XHP2vtfc7vce/MvXdmOo++Zii2paASyqTlbUVoRPnHYCUGjUAQjMYoiKGiiaYmGk3UxIjV2KigaIkVTfCFEIGovMKjBAIR[...]",
-    ghost2: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAMR0lEQVR42u2bf6hl11XHP2vtfc659735+WY686bTmCExTTNDTBydNDidxkhDGttKqJRiURCsECzUYIsilWgrtGoE0VhKQRHBtlKlbaTVDvijWFui[...]",
-    ghost3: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAANqUlEQVR42u2ba6xm1VnHf89aa+993nPOOWcuzMAwwwDlMpRpQ6faNqJIy82UaJtip1+qSVuJkDQ1DbGFhNRaqyZ8aLAq1tAaTRQbU9GGSlFMMNYi[...]",
-    ghost4: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAMuUlEQVR42u2abaxl5VXHf2s9z9773LnzcgcHgVroiwjM8FKCvLRMAa0MUEohYkykif1ifOmHKlZNTGxJNFbrh7aa2PpBS2mqSU2a1tgPFg2VIq+t[...]",
-    ghost5: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAPRElEQVR42u2be6hnV3XHP2vtfc7vcd/zyHtmMhOdxLcSlTaKqcE+FKQVtUpqRbRa6MNaqAhSQUKhtKWFgvhHq62ltFSLaCiU1oJYg5oQKdaIhpiZ[...]",
-    ghost6: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAMaUlEQVR42u2bf4xdV3HHPzPn3Pve/vA6jmODgkWcpHFc2wnECY0VidTNj0qYEBcSBWgbmqZq1ahVpRZSUUGrBqRC/+BvqrYSFaIVUhqEWlrRKlAK[...]"
+    pacman: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#ffcc00"/><path d="M32 32 L64 12 A30 30 0 0 1 32 62 z" fill="#000"/></svg>'),
+    ghost1: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#ff0000"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
+    ghost2: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#00ffff"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
+    ghost3: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#ff00ff"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
+    ghost4: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#ffaa00"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
+    ghost5: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#00ff00"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>'),
+    ghost6: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="40" rx="10" fill="#a000ff"/><circle cx="22" cy="28" r="6" fill="#fff"/><circle cx="42" cy="28" r="6" fill="#fff"/><circle cx="24" cy="28" r="3" fill="#000"/><circle cx="44" cy="28" r="3" fill="#000"/></svg>')
   };
 
   // ============== MAP ==============
