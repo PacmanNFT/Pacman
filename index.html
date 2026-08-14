@@ -137,13 +137,13 @@
   <script>
   // ============== EMBEDDED SPRITES ==============
   const SPRITES = {
-    pacman: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAATaUlEQVR42tWbbaxlZ1XHf2s9zz7nvt87r512pqXTaUtLKdAWKENAjQENRqxoqn7xAwaDBBMF9QufSmJCJIZojN80QSPGKCaWRo0GIiC1QN/oe5nO[...]
-    ghost1: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAPY0lEQVR42u2be6xnV1XHP2vtfc7vce/MvXdmOo++Zii2paASyqTlbUVoRPnHYCUGjUAQjMYoiKGiiaYmGk3UxIjV2KigaIkVTfCFEIGovMKjBAIR[...]
-    ghost2: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAMR0lEQVR42u2bf6hl11XHP2vtfc659735+WY686bTmCExTTNDTBydNDidxkhDGttKqJRiURCsECzUYIsilWgrtGoE0VhKQRHBtlKlbaTVDvijWFui[...]
-    ghost3: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAANqUlEQVR42u2ba6xm1VnHf89aa+993nPOOWcuzMAwwwDlMpRpQ6faNqJIy82UaJtip1+qSVuJkDQ1DbGFhNRaqyZ8aLAq1tAaTRQbU9GGSlFMMNYi[...]
-    ghost4: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAMuUlEQVR42u2abaxl5VXHf2s9z9773LnzcgcHgVroiwjM8FKCvLRMAa0MUEohYkykif1ifOmHKlZNTGxJNFbrh7aa2PpBS2mqSU2a1tgPFg2VIq+t[...]
-    ghost5: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAPRElEQVR42u2be6hnV3XHP2vtfc7vcd/zyHtmMhOdxLcSlTaKqcE+FKQVtUpqRbRa6MNaqAhSQUKhtKWFgvhHq62ltFSLaCiU1oJYg5oQKdaIhpiZ[...]
-    ghost6: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAMaUlEQVR42u2bf4xdV3HHPzPn3Pve/vA6jmODgkWcpHFc2wnECY0VidTNj0qYEBcSBWgbmqZq1ahVpRZSUUGrBqRC/+BvqrYSFaIVUhqEWlrRKlAK[...]
+    pacman: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAATaUlEQVR42tWbbaxlZ1XHf2s9zz7nvt87r512pqXTaUtLKdAWKENAjQENRqxoqn7xAwaDBBMF9QufSmJCJIZojN80QSPGKCaWRo0GIiC1QN/oe5nO[...]",
+    ghost1: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAPY0lEQVR42u2be6xnV1XHP2vtfc7vce/MvXdmOo++Zii2paASyqTlbUVoRPnHYCUGjUAQjMYoiKGiiaYmGk3UxIjV2KigaIkVTfCFEIGovMKjBAIR[...]",
+    ghost2: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAMR0lEQVR42u2bf6hl11XHP2vtfc659735+WY686bTmCExTTNDTBydNDidxkhDGttKqJRiURCsECzUYIsilWgrtGoE0VhKQRHBtlKlbaTVDvijWFui[...]",
+    ghost3: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAANqUlEQVR42u2ba6xm1VnHf89aa+993nPOOWcuzMAwwwDlMpRpQ6faNqJIy82UaJtip1+qSVuJkDQ1DbGFhNRaqyZ8aLAq1tAaTRQbU9GGSlFMMNYi[...]",
+    ghost4: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAMuUlEQVR42u2abaxl5VXHf2s9z9773LnzcgcHgVroiwjM8FKCvLRMAa0MUEohYkykif1ifOmHKlZNTGxJNFbrh7aa2PpBS2mqSU2a1tgPFg2VIq+t[...]",
+    ghost5: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAPRElEQVR42u2be6hnV3XHP2vtfc7vcd/zyHtmMhOdxLcSlTaKqcE+FKQVtUpqRbRa6MNaqAhSQUKhtKWFgvhHq62ltFSLaCiU1oJYg5oQKdaIhpiZ[...]",
+    ghost6: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAMaUlEQVR42u2bf4xdV3HHPzPn3Pve/vA6jmODgkWcpHFc2wnECY0VidTNj0qYEBcSBWgbmqZq1ahVpRZSUUGrBqRC/+BvqrYSFaIVUhqEWlrRKlAK[...]"
   };
 
   // ============== MAP ==============
@@ -191,6 +191,10 @@
   let frame = 0;
   let lastTime = 0;
 
+  // Tunable radii to avoid getting stuck
+  const PAC_RADIUS = 0.32; // smaller so Pacman fits corridors
+  const GHOST_RADIUS = 0.3;
+
   // Directions
   const DIRS = {
     up:    { x: 0, y: -1, name: 'up' },
@@ -200,13 +204,19 @@
   };
   const DIR_LIST = ['up', 'left', 'down', 'right']; // classic priority-ish
 
+  function reverseDir(d) {
+    if (!d) return DIRS.left;
+    if (d.x === 0) return d.y > 0 ? DIRS.up : DIRS.down;
+    return d.x > 0 ? DIRS.left : DIRS.right;
+  }
+
   // Pacman
   let pac = {
     x: 0, y: 0,
     dir: DIRS.left,
     nextDir: DIRS.left,
     speed: 4.2, // tiles per second
-    radius: 0.42
+    radius: PAC_RADIUS
   };
 
   // Ghosts
@@ -265,10 +275,16 @@
     const imgs = ['ghost1','ghost2','ghost3','ghost4','ghost5','ghost6'];
     for (let i = 0; i < 6; i++) {
       const s = ghostStarts[i];
+      // choose an initial direction that's valid
+      let initDir = DIRS.left;
+      for (const name of DIR_LIST) {
+        const d = DIRS[name];
+        if (canMove(s.x, s.y, d, GHOST_RADIUS)) { initDir = d; break; }
+      }
       ghosts.push({
         x: s.x,
         y: s.y,
-        dir: DIRS[DIR_LIST[i % 4]],
+        dir: initDir,
         speed: 3.4 + (i % 3) * 0.15,
         baseSpeed: 3.4 + (i % 3) * 0.15,
         imgKey: imgs[i],
@@ -304,8 +320,8 @@
   }
 
   function canMove(x, y, dir, radius = 0.35) {
-    // Simple forward check + slight side tolerance for grid movement
-    const look = 0.45;
+    // Slightly shorter look to avoid corner clipping
+    const look = 0.36;
     const nx = x + dir.x * look;
     const ny = y + dir.y * look;
     // Check center and two side points
@@ -332,8 +348,8 @@
   // ============== GHOST AI ==============
   function chooseGhostDir(g) {
     if (g.state === 'eaten') {
-      // Head home (center-ish)
-      const target = { x: 9.5, y: 9.5 };
+      // Head home (their start)
+      const target = ghostStarts[g.id] || { x: 9.5, y: 9.5 };
       return greedyDir(g, target, true);
     }
     if (g.state === 'frightened') {
@@ -355,17 +371,15 @@
     for (const name of DIR_LIST) {
       const d = DIRS[name];
       if (!allowReverse && d.x === -g.dir.x && d.y === -g.dir.y) continue;
-      if (canMove(g.x, g.y, d, 0.35)) {
+      if (canMove(g.x, g.y, d, GHOST_RADIUS)) {
         const dist = Math.hypot((g.x + d.x) - target.x, (g.y + d.y) - target.y);
         options.push({ dir: d, dist });
       }
     }
     if (options.length === 0) {
-      // Must reverse - return proper DIRS object reference
-      return DIRS[g.dir.x === 0 ? (g.dir.y > 0 ? 'up' : 'down') : (g.dir.x > 0 ? 'left' : 'right')];
+      return reverseDir(g.dir);
     }
     options.sort((a, b) => a.dist - b.dist);
-    // Occasionally pick 2nd best for unpredictability
     if (options.length > 1 && Math.random() < 0.18) {
       return options[1].dir;
     }
@@ -377,9 +391,9 @@
     for (const name of DIR_LIST) {
       const d = DIRS[name];
       if (d.x === -g.dir.x && d.y === -g.dir.y) continue;
-      if (canMove(g.x, g.y, d, 0.35)) valid.push(d);
+      if (canMove(g.x, g.y, d, GHOST_RADIUS)) valid.push(d);
     }
-    if (valid.length === 0) return DIRS[g.dir.x === 0 ? (g.dir.y > 0 ? 'up' : 'down') : (g.dir.x > 0 ? 'left' : 'right')];
+    if (valid.length === 0) return reverseDir(g.dir);
     return valid[Math.floor(Math.random() * valid.length)];
   }
 
@@ -404,10 +418,8 @@
     }
 
     // --- Pacman movement ---
-    // Try to turn to nextDir when possible
     if (pac.nextDir && (pac.nextDir.x !== pac.dir.x || pac.nextDir.y !== pac.dir.y)) {
       if (canMove(pac.x, pac.y, pac.nextDir, pac.radius)) {
-        // Snap if near center for clean turns
         if (atTileCenter(pac, 0.25)) {
           snapToCenter(pac);
           pac.dir = pac.nextDir;
@@ -416,15 +428,21 @@
         }
       }
     }
-    // FIX #1: Always attempt movement in current direction, don't stop on failed turn
-    // Move in CURRENT direction (always checked if possible)
+
     if (canMove(pac.x, pac.y, pac.dir, pac.radius)) {
       pac.x += pac.dir.x * pac.speed * dt;
       pac.y += pac.dir.y * pac.speed * dt;
     } else {
-      // Only snap if at tile center, but don't stop momentum
-      if (atTileCenter(pac, 0.25)) snapToCenter(pac);
+      // If blocked but nextDir would be valid, allow small slide toward it
+      if (pac.nextDir && canMove(pac.x, pac.y, pac.nextDir, pac.radius * 0.9)) {
+        pac.dir = pac.nextDir;
+        pac.x += pac.dir.x * pac.speed * dt;
+        pac.y += pac.dir.y * pac.speed * dt;
+      } else if (atTileCenter(pac, 0.25)) {
+        snapToCenter(pac);
+      }
     }
+
     // Wrap horizontal tunnels
     if (pac.x < 0) pac.x += COLS;
     else if (pac.x >= COLS) pac.x -= COLS;
@@ -449,8 +467,8 @@
         for (const g of ghosts) {
           if (g.state !== 'eaten') {
             g.state = 'frightened';
-            // Reverse direction
-            g.dir = { x: -g.dir.x, y: -g.dir.y };
+            // Reverse direction (use DIRS reference)
+            g.dir = reverseDir(g.dir);
           }
         }
         updateUI();
@@ -461,7 +479,6 @@
     if (pelletsLeft <= 0) {
       score += 500 * level;
       level++;
-      // Reset pellets for next board, keep score/lives, ghosts reset
       buildMap();
       resetPositions();
       powered = false;
@@ -473,19 +490,24 @@
 
     // --- Ghosts ---
     for (const g of ghosts) {
-      // FIX #5: Handle speed updates in correct order
       if (g.state === 'eaten') {
         g.eatenTimer -= dt;
         g.speed = 6;
         if (g.eatenTimer <= 0) {
+          // Respawn at their start positions
+          const start = ghostStarts[g.id] || { x: 9.5, y: 9.5 };
+          g.x = start.x;
+          g.y = start.y;
           g.state = powered ? 'frightened' : 'normal';
           g.speed = g.baseSpeed;
-          // Respawn near center
-          g.x = 9.5;
-          g.y = 9.5;
+          g.eatenTimer = 0;
+          // pick a valid direction at spawn
+          for (const name of DIR_LIST) {
+            const d = DIRS[name];
+            if (canMove(g.x, g.y, d, GHOST_RADIUS)) { g.dir = d; break; }
+          }
         }
       } else {
-        // Speed logic for non-eaten ghosts
         if (g.state === 'frightened') {
           g.speed = g.baseSpeed * 0.55;
         } else {
@@ -493,41 +515,40 @@
         }
       }
 
-      // Decide new direction near tile centers or if blocked
       const nearCenter = atTileCenter(g, 0.22);
       if (nearCenter) {
         snapToCenter(g);
         g.dir = chooseGhostDir(g);
       }
 
-      if (canMove(g.x, g.y, g.dir, 0.32)) {
+      if (canMove(g.x, g.y, g.dir, GHOST_RADIUS)) {
         g.x += g.dir.x * g.speed * dt;
         g.y += g.dir.y * g.speed * dt;
       } else {
-        // Blocked - force rechoose (even if not centered)
+        // Blocked - force rechoose
         g.dir = chooseGhostDir(g);
-        // Try the new dir immediately
-        if (canMove(g.x, g.y, g.dir, 0.32)) {
+        if (canMove(g.x, g.y, g.dir, GHOST_RADIUS)) {
           g.x += g.dir.x * g.speed * dt;
           g.y += g.dir.y * g.speed * dt;
         }
       }
+
       // Wrap horizontal tunnels
       if (g.x < 0) g.x += COLS;
       else if (g.x >= COLS) g.x -= COLS;
 
-      // FIX #4: Collision radius reduced from 0.7 to 0.5 for better gameplay
+      // Collision
       const dist = Math.hypot(g.x - pac.x, g.y - pac.y);
       if (dist < 0.5) {
         if (g.state === 'frightened') {
           // Eat ghost
           g.state = 'eaten';
-          g.eatenTimer = 4;
+          g.eatenTimer = 0.5; // short timer before teleport/respawn
           score += 200;
           updateUI();
         } else if (g.state === 'normal') {
-          // Die
-          lives--;
+          // Pacman loses a life
+          lives = Math.max(0, lives - 1);
           updateUI();
           if (lives <= 0) {
             gameOver = true;
