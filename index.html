@@ -133,6 +133,12 @@
       color: #fff;
       transform: scale(0.92);
     }
+    /* Active class for pointer-based interactions */
+    .dpad-btn.active {
+      background: rgba(0, 255, 255, 0.4);
+      color: #fff;
+      transform: scale(0.92);
+    }
     #btn-up { grid-column: 2; grid-row: 1; }
     #btn-left { grid-column: 1; grid-row: 2; }
     #btn-down { grid-column: 2; grid-row: 2; }
@@ -695,12 +701,38 @@
   function bindDpadButton(id, dirName) {
     const btn = document.getElementById(id);
     if (!btn) return;
-    const handler = (e) => {
-      e.preventDefault();
+
+    const onDown = (e) => {
+      if (e && e.cancelable) e.preventDefault();
       if (gameRunning) setDir(dirName);
+      btn.classList.add('active');
+
+      // pointer capture for robust handling (if available)
+      if (e && typeof e.pointerId === 'number' && btn.setPointerCapture) {
+        try { btn.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      }
     };
-    btn.addEventListener('touchstart', handler, { passive: false });
-    btn.addEventListener('mousedown', handler);
+
+    const onUp = (e) => {
+      if (e && e.cancelable) e.preventDefault();
+      btn.classList.remove('active');
+
+      if (e && typeof e.pointerId === 'number' && btn.releasePointerCapture) {
+        try { btn.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      }
+    };
+
+    // Preferred: pointer events
+    btn.addEventListener('pointerdown', onDown, { passive: false });
+    btn.addEventListener('pointerup', onUp);
+    btn.addEventListener('pointercancel', onUp);
+    btn.addEventListener('lostpointercapture', onUp);
+
+    // Fallbacks for older browsers
+    btn.addEventListener('touchstart', onDown, { passive: false });
+    btn.addEventListener('touchend', onUp);
+    btn.addEventListener('mousedown', (e) => { onDown(e); });
+    btn.addEventListener('mouseup', onUp);
   }
 
   function resize() {
